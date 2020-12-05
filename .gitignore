@@ -3,3 +3,5 @@
 *.class
 *.name
 Maven_*.xml
+/zc01-admin-parent/admin-component/target/
+/zc03-admin-reverse/target/
