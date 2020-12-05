@@ -26,18 +26,17 @@ public class CustomExceptionHandler {
     /**
      * 处理登陆失败的异常
      *
-     * @param handler
-     * @param ex
-     * @param request
-     * @param response
-     * @return
-     * @throws IOException
+     * @param handler  controller对象
+     * @param ex       异常对象
+     * @param request  请求对象
+     * @param response 响应对象
+     * @return 返回ModelAndView
+     * @throws IOException 异常
      */
     @ExceptionHandler(value = {LoginFailedException.class, AccessForbiddenException.class})
     public ModelAndView resolveLoginFailedException(Object handler, LoginFailedException ex, HttpServletRequest request,
                                                     HttpServletResponse response) throws IOException {
         logger.debug("Controller异常处理 : {} ", handler.getClass());
-		logger.debug("0信1息2信息3");
         Throwable exception = parseException(ex);
         String viewName = "admin/admin-login";
         return handle(viewName, exception, request, response);
@@ -45,7 +44,7 @@ public class CustomExceptionHandler {
 
 
     @ExceptionHandler
-    public ModelAndView resolveException(Object handler, Exception ex, HttpServletRequest request,
+    public ModelAndView resolveException(Exception ex, HttpServletRequest request,
                                          HttpServletResponse response) throws IOException {
         Throwable exception = parseException(ex);
         String viewName = "system-error";
@@ -59,8 +58,8 @@ public class CustomExceptionHandler {
      * @param ex       异常对象
      * @param request  HttpServletRequest 请求对象
      * @param response HttpServletRequest 响应对象
-     * @throws IOException
      * @return 根据请求类型返回 AJAX: JSON    普通请求：ModelAndView
+     * @throws IOException 异常
      */
     private ModelAndView handle(String viewName, Throwable ex, HttpServletRequest request, HttpServletResponse response)
             throws IOException {
@@ -81,7 +80,7 @@ public class CustomExceptionHandler {
      * 判断是否是AJAX请求
      *
      * @param request HttpServletRequest请求对象
-     * @return
+     * @return boolean
      */
     private boolean isAjax(HttpServletRequest request) {
         String requestedWith = request.getHeader("x-requested-with");
@@ -91,7 +90,7 @@ public class CustomExceptionHandler {
     /**
      * 获取到最内层的异常
      *
-     * @param e
+     * @param e 异常对象Throwable
      * @return Throwable
      */
     private static Throwable parseException(Throwable e) {

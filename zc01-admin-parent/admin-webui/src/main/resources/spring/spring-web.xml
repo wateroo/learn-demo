@@ -51,7 +51,7 @@
 	<mvc:view-controller path="/error" view-name="system-error"/>
 
 	<!--配置拦截器-->
-    <mvc:interceptors>
+<!--    <mvc:interceptors>
         <mvc:interceptor>
         	<mvc:mapping path="/**"/>
         	<mvc:exclude-mapping path="/"/>
@@ -61,7 +61,7 @@
 			<mvc:exclude-mapping path="/admin/logout"/>
         	<bean class="com.watero.interceptor.LoginInterceptor" />
         </mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors>-->
 
 	<!-- 基于XML的异常映射 -->
 	<bean id="simpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

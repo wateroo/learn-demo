@@ -1,17 +1,17 @@
 package com.watero.controller;
 
 import cn.hutool.crypto.SecureUtil;
+import com.github.pagehelper.PageInfo;
 import com.watero.entity.User;
 import com.watero.service.UserService;
 import com.watero.util.CommonConfigConstant;
+import com.watero.util.ResultEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,6 +53,23 @@ public class AdminController {
             request.getSession().invalidate();
         }
         return "redirect:/index.html";
+    }
+
+    @RequestMapping("/user/list")
+    public String userList(User user, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, Model model){
+        PageInfo<User> userListPageInfo = userService.getUserListPageInfo(user, pageNum, pageSize);
+        model.addAttribute("pageInfo",userListPageInfo);
+        return "admin/user/list";
+    }
+
+    @GetMapping("/user")
+    @ResponseBody
+    public ResultEntity<PageInfo<User>> getUserListPageInfo(User user, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+    @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, Model model) {
+        PageInfo<User> userListPageInfo = userService.getUserListPageInfo(user, pageNum, pageSize);
+        ResultEntity<PageInfo<User>> pageInfoResultEntity = ResultEntity.successWithData(userListPageInfo);
+        return pageInfoResultEntity;
     }
 
 

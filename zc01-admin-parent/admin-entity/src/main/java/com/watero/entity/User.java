@@ -1,5 +1,9 @@
 package com.watero.entity;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Date;
 
 public class User {
@@ -15,6 +19,7 @@ public class User {
 
     private Long userOrder;
 
+    @JsonIgnore
     private String password;
 
     private Boolean userStatus;

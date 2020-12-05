@@ -3,6 +3,8 @@ package com.watero.service.impl;
 import cn.hutool.Hutool;
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.watero.entity.User;
 import com.watero.entity.UserExample;
 import com.watero.exception.LoginFailedException;
@@ -47,5 +49,14 @@ public class UserServiceImpl implements UserService {
             throw new LoginFailedException(CommonConfigConstant.MESSAGE_LOGIN_INFO_ERROR);
         }
         return user;
+    }
+
+    @Override
+    public PageInfo<User> getUserListPageInfo(User user, int pageNum, int pageSize) {
+        // 开启分页
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = userMapper.getUserListPageInfo(user);
+        PageInfo<User> pageInfo = new PageInfo<>(list);
+        return pageInfo;
     }
 }
