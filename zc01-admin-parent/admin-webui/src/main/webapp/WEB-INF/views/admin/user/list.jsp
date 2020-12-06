@@ -81,7 +81,7 @@
                             <tfoot>
                             <tr>
                                 <td colspan="6" align="center">
-                                    <ul class="pagination">
+                                    <ul class="pagination" id="pagination">
                                         <li class="disabled"><a href="#">上一页</a></li>
                                         <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
                                         <li><a href="#">2</a></li>
@@ -102,12 +102,49 @@
     </div>
 </div>
 <script type="javascript">
-function jumpToPage(page){
+    const pageSize = 10; // 页条数
+    const curPage = 1; // 页码
+    // 渲染分页插件
+    setPaginator(totalPages,curPage);
 
-}
-function initPageInfo(data){
+    //分页功能
+    const setPaginator = function (totalPages, curPage) {
+        $('#pagination').bootstrapPaginator({
+            bootstrapMajorVersion: 3, //对应bootstrap版本
+            alignment: 'center',
+            size: 'small', //分页大小
+            currentPage: curPage, //当前页
+            numberOfPages: 5, //显示的页数
+            totalPages: totalPages, // 总页数
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "首页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "末页";
+                    case "page":
+                        return page;
+                }
 
-}
+            },
+            /**
+             * 分页点击事件
+             * @param event [jquery对象]
+             * @param originalEvent [dom原生对象]
+             * @param type [按钮类型]
+             * @param page [点击按钮对应的页码]
+             */
+            onPageClicked: function (event, originalEvent, type, page) {
+                curPage = page;//根据点击页数渲染页面
+                getListInfo(curPage);//重新渲染数据
+            }
+        })
+    };
+
 </script>
 </body>
 </html>
