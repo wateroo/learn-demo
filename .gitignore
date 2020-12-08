@@ -1,0 +1,8 @@
+.idea/
+*.iml
+*.class
+*.name
+rebel-remote.xml
+rebel.xml
+/zc01-admin-parent/admin-component/target/
+/zc03-admin-reverse/target/
