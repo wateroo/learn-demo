@@ -10,6 +10,8 @@
     <result column="user_order" jdbcType="BIGINT" property="userOrder" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="user_status" jdbcType="BIT" property="userStatus" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     user_id, user_name, nick_name, create_date, last_update_date, user_order, password, 
-    user_status
+    user_status, phone, email
   </sql>
   <select id="selectByExample" parameterType="com.watero.entity.UserExample" resultMap="BaseResultMap">
     select
@@ -88,7 +90,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from t_user
     where user_id = #{userId,jdbcType=VARCHAR}
@@ -106,10 +108,12 @@
   <insert id="insert" parameterType="com.watero.entity.User">
     insert into t_user (user_id, user_name, nick_name, 
       create_date, last_update_date, user_order, 
-      password, user_status)
+      password, user_status, phone, 
+      email)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=DATE}, #{lastUpdateDate,jdbcType=DATE}, #{userOrder,jdbcType=BIGINT}, 
-      #{password,jdbcType=VARCHAR}, #{userStatus,jdbcType=BIT})
+      #{password,jdbcType=VARCHAR}, #{userStatus,jdbcType=BIT}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.watero.entity.User">
     insert into t_user
@@ -138,6 +142,12 @@
       <if test="userStatus != null">
         user_status,
       </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -163,6 +173,12 @@
       </if>
       <if test="userStatus != null">
         #{userStatus,jdbcType=BIT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -199,6 +215,12 @@
       <if test="record.userStatus != null">
         user_status = #{record.userStatus,jdbcType=BIT},
       </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -207,13 +229,15 @@
   <update id="updateByExample" parameterType="map">
     update t_user
     set user_id = #{record.userId,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      nick_name = #{record.nickName,jdbcType=VARCHAR},
-      create_date = #{record.createDate,jdbcType=DATE},
-      last_update_date = #{record.lastUpdateDate,jdbcType=DATE},
-      user_order = #{record.userOrder,jdbcType=BIGINT},
-      password = #{record.password,jdbcType=VARCHAR},
-      user_status = #{record.userStatus,jdbcType=BIT}
+    user_name = #{record.userName,jdbcType=VARCHAR},
+    nick_name = #{record.nickName,jdbcType=VARCHAR},
+    create_date = #{record.createDate,jdbcType=DATE},
+    last_update_date = #{record.lastUpdateDate,jdbcType=DATE},
+    user_order = #{record.userOrder,jdbcType=BIGINT},
+    password = #{record.password,jdbcType=VARCHAR},
+    user_status = #{record.userStatus,jdbcType=BIT},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    email = #{record.email,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -242,6 +266,12 @@
       <if test="userStatus != null">
         user_status = #{userStatus,jdbcType=BIT},
       </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
@@ -253,7 +283,9 @@
       last_update_date = #{lastUpdateDate,jdbcType=DATE},
       user_order = #{userOrder,jdbcType=BIGINT},
       password = #{password,jdbcType=VARCHAR},
-      user_status = #{userStatus,jdbcType=BIT}
+      user_status = #{userStatus,jdbcType=BIT},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>

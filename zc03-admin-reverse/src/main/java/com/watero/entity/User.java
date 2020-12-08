@@ -19,6 +19,10 @@ public class User {
 
     private Boolean userStatus;
 
+    private String phone;
+
+    private String email;
+
     public String getUserId() {
         return userId;
     }
@@ -81,5 +85,21 @@ public class User {
 
     public void setUserStatus(Boolean userStatus) {
         this.userStatus = userStatus;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
     }
 }

@@ -62,7 +62,7 @@
                                         <td><input type="checkbox"></td>
                                         <td>${admin.userId }</td>
                                         <td>${admin.nickName }</td>
-                                        <td>${admin.userStatus }</td>
+                                        <td>${admin.email }</td>
                                         <td>
                                             <button type="button" class="btn btn-success btn-xs">
                                                 <i class=" glyphicon glyphicon-check"></i>
