@@ -2,7 +2,7 @@
 *.iml
 *.class
 *.name
-target
+target/
 rebel-remote.xml
 rebel.xml
 /zc01-admin-parent/admin-component/target/
