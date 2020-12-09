@@ -46,7 +46,7 @@
         </javaClientGenerator>
 
         <!-- 数据库表名字和我们的entity类对应的映射指定 -->
-        <table tableName="t_user" domainObjectName="User"/>
+        <table tableName="t_role" domainObjectName="Role"/>
 
         <!-- mybatis-generator:generate -->
     </context>
