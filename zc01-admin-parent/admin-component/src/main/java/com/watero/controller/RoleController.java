@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 @RestController
 public class RoleController {
@@ -41,10 +42,13 @@ public class RoleController {
         return ResultEntity.successWithoutData();
     }
 
-    @DeleteMapping("/role/{id}")
-    public ResultEntity deleteRole(@PathVariable Long id) {
-        roleService.deleteRole(Arrays.asList(id));
-        return ResultEntity.successWithoutData();
+    @DeleteMapping("/role")
+    public ResultEntity deleteRole(@RequestBody List<Long> ids) {
+        boolean rs = roleService.deleteRole(ids);
+        if(rs){
+            return ResultEntity.successWithoutData();
+        }
+        return ResultEntity.faliledWithData("删除失败");
     }
 
 

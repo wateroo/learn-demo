@@ -73,9 +73,14 @@ public class AdminController {
     }
 
 
-    @GetMapping("/role/list")
+    @GetMapping("/role/list.html")
     public String roleList() {
         return "admin/role/roleList";
+    }
+
+    @GetMapping("/role/add.html")
+    public String addRole() {
+        return "admin/role/addRole";
     }
 
 

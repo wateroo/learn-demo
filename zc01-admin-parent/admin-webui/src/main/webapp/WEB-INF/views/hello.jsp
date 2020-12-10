@@ -100,7 +100,7 @@
                         <button type="button" class="btn btn-default" id="c">数组-2</button>
                         <button type="button" class="btn btn-default" id="d">数组-3</button>
                         <button type="button" class="btn btn-default" id="e">复杂对象</button>
-                        <button type="button" class="btn btn-default">提交</button>
+                        <button type="button" class="btn btn-default" id="f">确认</button>
                         <button type="button" class="btn btn-default">提交</button>
                         <button type="button" class="btn btn-default">提交</button>
                     </div>
@@ -261,6 +261,13 @@
                 console.log("请求成功时调用此函数");
                 $("#jsonText").val(JSON.stringify(data));
             }
+        });
+    });
+
+    $("#f").click(function () {
+        layer.confirm('你确定要删除该广告吗?', {icon: 3, title: '提示'}, function (index) {
+            console.log("index");
+            layer.close(index);
         });
     });
 

@@ -35,8 +35,11 @@ public class RoleServiceImpl implements RoleService {
         if (idList.size() > 0) {
             int i = 0;
             for (Long id : idList) {
+                if(id==null){
+                    continue;
+                }
                 int rs = roleMapper.deleteByPrimaryKey(id);
-                if (rs == 0) i++;
+                if (rs != 0) i++;
             }
             if (i == sum) {
                 return true;

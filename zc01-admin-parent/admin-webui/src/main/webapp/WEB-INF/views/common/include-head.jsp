@@ -42,5 +42,5 @@
 		});
 	});
 </script>
-<title></title>
+<title>index</title>
 </head>
