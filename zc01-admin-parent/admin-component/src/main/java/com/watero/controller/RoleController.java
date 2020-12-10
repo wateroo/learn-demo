@@ -7,19 +7,13 @@ import com.watero.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @RestController
 public class RoleController {
 
     @Autowired
     RoleService roleService;
-
-    @ModelAttribute
-    public Role role(Role role) {
-        if (role.getRoleId() != null) {
-            return roleService.queryById(role.getRoleId());
-        }
-        return role;
-    }
 
 
     @GetMapping("/role")
@@ -41,11 +35,15 @@ public class RoleController {
         return ResultEntity.successWithoutData();
     }
 
-    @DeleteMapping("/role/{id}")
-    public ResultEntity addRole(@PathVariable Long id) {
-        Role role = new Role();
-        role.setRoleId(id);
+    @PutMapping("/role")
+    public ResultEntity updateRole(@RequestBody Role role) {
         roleService.insertOrUpdateRole(role);
+        return ResultEntity.successWithoutData();
+    }
+
+    @DeleteMapping("/role/{id}")
+    public ResultEntity deleteRole(@PathVariable Long id) {
+        roleService.deleteRole(Arrays.asList(id));
         return ResultEntity.successWithoutData();
     }
 

@@ -44,7 +44,7 @@ public class ResultEntity<T> {
 	}
 
 	public static <Type> ResultEntity<Type> successWithData(Type data) {
-		return new ResultEntity<Type>(SUCCESS, null, data);
+		return new ResultEntity<Type>(SUCCESS, "请求成功", data);
 	}
 
 	public static <Type> ResultEntity<Type> faliledWithData(String message) {

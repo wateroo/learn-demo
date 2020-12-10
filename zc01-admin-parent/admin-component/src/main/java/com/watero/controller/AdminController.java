@@ -34,7 +34,7 @@ public class AdminController {
      * @param loginAcct    登陆账户
      * @param userPassword 登陆密码
      * @param request      HttpServletRequest对象
-     * @return  主页视图
+     * @return 主页视图
      */
     @PostMapping("/login")
     public String login(@RequestParam(value = "loginAcct") String loginAcct,
@@ -57,19 +57,25 @@ public class AdminController {
 
     @RequestMapping("/user/list")
     public String userList(User user, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                           @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model){
+                           @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model) {
         PageInfo<User> userListPageInfo = userService.getUserListPageInfo(user, pageNum, pageSize);
-        model.addAttribute("pageInfo",userListPageInfo);
+        model.addAttribute("pageInfo", userListPageInfo);
         return "admin/user/list";
     }
 
     @GetMapping("/user")
     @ResponseBody
     public ResultEntity<PageInfo<User>> getUserListPageInfo(User user, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-    @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model) {
+                                                            @RequestParam(value = "pageSize", defaultValue = "5") int pageSize, Model model) {
         PageInfo<User> userListPageInfo = userService.getUserListPageInfo(user, pageNum, pageSize);
         ResultEntity<PageInfo<User>> pageInfoResultEntity = ResultEntity.successWithData(userListPageInfo);
         return pageInfoResultEntity;
+    }
+
+
+    @GetMapping("/role/list")
+    public String roleList() {
+        return "admin/role/roleList";
     }
 
 

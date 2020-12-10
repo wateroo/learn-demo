@@ -46,6 +46,7 @@
 
 	<mvc:view-controller path="/" view-name="admin/admin-login"/>
 	<mvc:view-controller path="/index.html" view-name="admin/admin-login"/>
+	<mvc:view-controller path="/hello" view-name="hello"/>
 
 	<mvc:view-controller path="/main.html" view-name="admin/admin-main"/>
 	<mvc:view-controller path="/error" view-name="system-error"/>

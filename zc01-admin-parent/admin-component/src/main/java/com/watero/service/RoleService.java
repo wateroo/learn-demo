@@ -13,4 +13,6 @@ public interface RoleService {
     public boolean deleteRole(List<Long> idList);
 
     public int insertOrUpdateRole(Role role);
+
+
 }
