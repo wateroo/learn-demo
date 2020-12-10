@@ -26,9 +26,32 @@ CREATE TABLE `t_role` (
   `remark` varchar(100) DEFAULT NULL,
   `role_status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `t_role` */
+
+insert  into `t_role`(`role_id`,`role_name`,`remark`,`role_status`) values 
+(1,'开发1','开发',1),
+(2,'开发2','开发',1),
+(3,'开发3','开发',1),
+(4,'开发4','开发',1),
+(5,'开发5','开发',1),
+(6,'开发6','开发',1),
+(7,'开发7','开发',1),
+(8,'开发8','开发',1),
+(9,'开发9','开发',1),
+(10,'开发10','开发',1),
+(11,'开发11','开发',1),
+(12,'开发12','开发',1),
+(13,'开发13','开发',1),
+(14,'14','开发',1),
+(15,'开发','开发',1),
+(16,'开发','开发',1),
+(17,'开发','开发',1),
+(18,'开发','开发',1),
+(19,'开发','开发',1),
+(20,'开发','开发',1),
+(21,'开发','开发',1);
 
 /*Table structure for table `t_user` */
 
