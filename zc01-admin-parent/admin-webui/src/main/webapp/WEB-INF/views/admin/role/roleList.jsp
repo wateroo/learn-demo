@@ -43,7 +43,6 @@
                             <tr>
                                 <th width="30">#</th>
                                 <th width="30"><input type="checkbox"></th>
-                                <th>序号</th>
                                 <th>角色名称</th>
                                 <th>状态</th>
                                 <th width="100">操作</th>
@@ -67,48 +66,19 @@
     </div>
 </div>
 <script type="text/javascript">
-    let pageNum = 1;
-    let pageSize = 5;
-
-    const options = {
-        bootstrapMajorVersion: 3,//bootstrap版本
-        alignment: "center",//居中显示
-        currentPage: pageNum,//当前页数
-        totalPages: pageSize,//总页数 注意不是总条数
-        itemTexts: function (type, page, current) {
-            switch (type) {
-                case "first":
-                    return "首页";
-                case "prev":
-                    return "上一页";
-                case "next":
-                    return "下一页";
-                case "last":
-                    return "末页";
-                case "page":
-                    return page;
-            }
-        },//改写分页按钮字样
-        pageUrl: function (type, page, current) {
-            if (page == current) {
-                return "javascript:void(0)";
-            } else {
-                return queryData(pageNum, pageSize);
-            }
-        }
-    };
-
+    //页面是请求RESTFUL风格的API显示
+    /**
+     * 查询第N页的数据
+     * @param pageNum   页码
+     * @param pageSize  每页的显示条数
+     */
     function queryData(pageNum, pageSize) {
+        console.log("跳转至第" + pageNum + "页,显示：" + pageSize + "条数据");
+        let url = "${pageContext.request.contextPath}" + "/role?pageNum="+pageNum+"&pageSize="+pageSize;
         $.ajax({
-            async: false,
-            beforeSend: function (XHR) {
-                console.log("beforeSend(XHR)");
-            },
+            async: false,//异步请求
             cache: true,
-            complete: function (XHR, TS) {
-                console.log("complete");
-            },
-            url: "${pageContext.request.contextPath}" + "/role?pageNUm=" + pageNum + "&pageSize=" + pageSize,
+            url: url,
             contentType: "application/json",
             data: {//可以封装查询条件
                 // id: "1",
@@ -122,12 +92,14 @@
             },
             success: function (data) {
                 console.log("请求成功时调用此函数");
-                renderTableTbody("tb", data);
+                console.log(data);
+                renderTableTbody(data);
+                renderPage(data);
             }
         });
     }
 
-    function renderTableTbody(tableId, rs) {
+    function renderTableTbody(rs) {
         const size = rs.data.list.length;
         if (size == 0) {
             const row = '<tr><td colspan="6" align="center">抱歉！没有查询到您要的数据！!</td></tr>';
@@ -136,9 +108,8 @@
         let html = "";
         $(rs.data.list).each(function (index) {
             const row = "<tr>" +
-                "<td>" + (index+1)+ "</td>" +
-                "<td><input type='checkbox'></td>"+
-                "<td>" + (index+1)+ "</td>" +
+                "<td>" + (index + 1) + "</td>" +
+                "<td><input type='checkbox'></td>" +
                 "<td>" + rs.data.list[index].roleName + "</td>" +
                 "<td>" + getStatus(rs.data.list[index].roleStatus) + "</td>" +
                 "<td>" +
@@ -155,19 +126,54 @@
                 "</tr>";
             html += row;
         });
-        $("#" + tableId).html(html);
-
+        $("#tb").html(html);
     }
 
-    function getStatus(status){
-        return status==1?"启用":"注销";
+    function renderPage(rs) {
+        console.log(rs);
+        let pageNum = rs.data.pageNum;
+        let pageSize = rs.data.pageSize;
+        const options = {
+            bootstrapMajorVersion: 3,//bootstrap版本
+            alignment: "center",//居中显示
+            currentPage: pageNum,//当前页数
+            totalPages: pageSize,//总页数 注意不是总条数
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "首页";
+                    case "prev":
+                        return "上一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "末页";
+                    case "page":
+                        return page;
+                }
+            },//改写分页按钮字样
+            pageUrl: function (type, page, current) {
+                if (page == current) {
+                    return "javascript:void(0)";
+                } else {
+                    return "javascript:queryData('" + page + "','')";
+                    // return queryData(pageNum, pageSize);
+                }
+            }
+        };
+
+        $("#pagination").bootstrapPaginator(options);// $("#pagintor") Bootstrap 是2.X 使用div元素，3.X使用ul元素
+    }
+
+    function getStatus(status) {
+        return status == 1 ? "启用" : "注销";
     }
 
 
     $(function () {
-        queryData(pageNum, pageSize);
-        $("#pagination").bootstrapPaginator(options);// $("#pagintor") Bootstrap 是2.X 使用div元素，3.X使用ul元素
+        queryData(1, 5);
     });
+
 
 </script>
 </body>
