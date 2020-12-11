@@ -31,4 +31,6 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     List<Role> queryRoleListPageInfo(Role role);
+
+    int deleteRoleBatch(@Param(value = "idList") List<Long> idList);
 }

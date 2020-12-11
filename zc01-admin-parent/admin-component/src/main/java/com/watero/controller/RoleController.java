@@ -44,11 +44,9 @@ public class RoleController {
 
     @DeleteMapping("/role")
     public ResultEntity deleteRole(@RequestBody List<Long> ids) {
-        boolean rs = roleService.deleteRole(ids);
-        if(rs){
-            return ResultEntity.successWithoutData();
-        }
-        return ResultEntity.faliledWithData("删除失败");
+        // boolean rs = roleService.deleteRole(ids);
+        roleService.deleteRoleBatch(ids);
+        return ResultEntity.successWithoutData();
     }
 
 

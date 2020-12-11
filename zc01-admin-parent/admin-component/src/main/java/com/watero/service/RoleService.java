@@ -8,11 +8,12 @@ import java.util.List;
 public interface RoleService {
     public Role queryById(Long id);
 
-    public PageInfo<Role> getPageInfo(Role role,int pageNum, int pageSize);
+    public PageInfo<Role> getPageInfo(Role role, int pageNum, int pageSize);
 
     public boolean deleteRole(List<Long> idList);
 
     public int insertOrUpdateRole(Role role);
 
+    public int deleteRoleBatch(List<Long> idList);
 
 }

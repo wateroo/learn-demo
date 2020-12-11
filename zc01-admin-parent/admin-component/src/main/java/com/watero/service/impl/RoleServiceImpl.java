@@ -3,8 +3,10 @@ package com.watero.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.watero.entity.Role;
+import com.watero.exception.RoleOptionException;
 import com.watero.mapper.RoleMapper;
 import com.watero.service.RoleService;
+import com.watero.util.CommonConfigConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +57,14 @@ public class RoleServiceImpl implements RoleService {
            return roleMapper.updateByPrimaryKey(role);
         }
         return roleMapper.insert(role);
+    }
+
+    @Override
+    public int deleteRoleBatch(List<Long> idList) {
+        int sum = roleMapper.deleteRoleBatch(idList);
+        if(idList.size()!=sum){
+            throw new RoleOptionException(CommonConfigConstant.MESSAGE_ROLE_DELETE_FAIL);
+        }
+        return sum;
     }
 }

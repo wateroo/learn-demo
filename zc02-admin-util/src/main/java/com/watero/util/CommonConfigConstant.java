@@ -11,4 +11,6 @@ public class CommonConfigConstant {
 	public static final String MESSAGE_LOGIN_INFO_ERROR = "用户名或密码错误！";
 	public static final String MESSAGE_USER_NOT_LOGIN = "访问拒绝,请先登录 !";
 
+	public static final String MESSAGE_ROLE_DELETE_FAIL = "角色删除失败 !";
+
 }

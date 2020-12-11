@@ -216,4 +216,14 @@
             role_status = #{roleStatus,jdbcType=TINYINT}
         where role_id = #{roleId,jdbcType=BIGINT}
     </update>
+    
+    <delete id="deleteRoleBatch" parameterType="Long">
+        delete from t_role
+        where role_id in
+        <foreach collection="idList" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+
 </mapper>

@@ -308,9 +308,11 @@
     function openModal(id) {
         $('#addRoleForm')[0].reset();
         $("#" + id).modal('show');
+        $('#addRoleForm')[0].reset();
     }
 
     function hideModal(id) {
+        $('#addRoleForm')[0].reset();
         $("#" + id).modal('hide');
         $('#addRoleForm')[0].reset();
     }

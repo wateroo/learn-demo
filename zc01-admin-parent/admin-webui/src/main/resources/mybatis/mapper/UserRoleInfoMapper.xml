@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.watero.mapper.RoleMapper">
-  <resultMap id="BaseResultMap" type="com.watero.entity.Role">
-    <id column="role_id" jdbcType="BIGINT" property="roleId" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="role_status" jdbcType="TINYINT" property="roleStatus" />
+<mapper namespace="com.watero.mapper.UserRoleInfoMapper">
+  <resultMap id="BaseResultMap" type="com.watero.entity.UserRoleInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    role_id, role_name, remark, role_status
+    id, user_id, role_id
   </sql>
-  <select id="selectByExample" parameterType="com.watero.entity.RoleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.watero.entity.UserRoleInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from t_role
+    from t_user_role_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,76 +84,67 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_role
-    where role_id = #{roleId,jdbcType=BIGINT}
+    from t_user_role_info
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_role
-    where role_id = #{roleId,jdbcType=BIGINT}
+    delete from t_user_role_info
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.watero.entity.RoleExample">
-    delete from t_role
+  <delete id="deleteByExample" parameterType="com.watero.entity.UserRoleInfoExample">
+    delete from t_user_role_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.watero.entity.Role">
-    insert into t_role (role_id, role_name, remark, 
-      role_status)
-    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
-      #{roleStatus,jdbcType=TINYINT})
+  <insert id="insert" parameterType="com.watero.entity.UserRoleInfo">
+    insert into t_user_role_info (id, user_id, role_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.watero.entity.Role">
-    insert into t_role
+  <insert id="insertSelective" parameterType="com.watero.entity.UserRoleInfo">
+    insert into t_user_role_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
       <if test="roleId != null">
         role_id,
       </if>
-      <if test="roleName != null">
-        role_name,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="roleStatus != null">
-        role_status,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
       <if test="roleId != null">
         #{roleId,jdbcType=BIGINT},
       </if>
-      <if test="roleName != null">
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="roleStatus != null">
-        #{roleStatus,jdbcType=TINYINT},
-      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.watero.entity.RoleExample" resultType="java.lang.Long">
-    select count(*) from t_role
+  <select id="countByExample" parameterType="com.watero.entity.UserRoleInfoExample" resultType="java.lang.Long">
+    select count(*) from t_user_role_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_role
+    update t_user_role_info
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
       <if test="record.roleId != null">
         role_id = #{record.roleId,jdbcType=BIGINT},
-      </if>
-      <if test="record.roleName != null">
-        role_name = #{record.roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.remark != null">
-        remark = #{record.remark,jdbcType=VARCHAR},
-      </if>
-      <if test="record.roleStatus != null">
-        role_status = #{record.roleStatus,jdbcType=TINYINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,35 +152,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_role
-    set role_id = #{record.roleId,jdbcType=BIGINT},
-      role_name = #{record.roleName,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR},
-      role_status = #{record.roleStatus,jdbcType=TINYINT}
+    update t_user_role_info
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      role_id = #{record.roleId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.watero.entity.Role">
-    update t_role
+  <update id="updateByPrimaryKeySelective" parameterType="com.watero.entity.UserRoleInfo">
+    update t_user_role_info
     <set>
-      <if test="roleName != null">
-        role_name = #{roleName,jdbcType=VARCHAR},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="roleStatus != null">
-        role_status = #{roleStatus,jdbcType=TINYINT},
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
       </if>
     </set>
-    where role_id = #{roleId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.watero.entity.Role">
-    update t_role
-    set role_name = #{roleName,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR},
-      role_status = #{roleStatus,jdbcType=TINYINT}
-    where role_id = #{roleId,jdbcType=BIGINT}
+  <update id="updateByPrimaryKey" parameterType="com.watero.entity.UserRoleInfo">
+    update t_user_role_info
+    set user_id = #{userId,jdbcType=BIGINT},
+      role_id = #{roleId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
