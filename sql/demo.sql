@@ -4,7 +4,6 @@ MySQL - 8.0.15 : Database - zcdb
 *********************************************************************
 */
 
-
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -17,6 +16,26 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`zcdb` /*!40100 DEFAULT CHARACTER SET ut
 
 USE `zcdb`;
 
+/*Table structure for table `t_menu_info` */
+
+DROP TABLE IF EXISTS `t_menu_info`;
+
+CREATE TABLE `t_menu_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pid` bigint(20) DEFAULT NULL,
+  `name` varchar(20) NOT NULL,
+  `url` varchar(50) NOT NULL,
+  `icon` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `t_menu_info` */
+
+insert  into `t_menu_info`(`id`,`pid`,`name`,`url`,`icon`) values 
+(1,NULL,'root','menu','a'),
+(2,1,'用户管理','user/list','a'),
+(3,1,'角色管理','role/list','a');
+
 /*Table structure for table `t_role` */
 
 DROP TABLE IF EXISTS `t_role`;
@@ -27,31 +46,19 @@ CREATE TABLE `t_role` (
   `remark` varchar(100) DEFAULT NULL,
   `role_status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `t_role` */
 
 insert  into `t_role`(`role_id`,`role_name`,`remark`,`role_status`) values 
-(1,'开发1','开发1',1),
-(2,'开发2','开发2',1),
-(3,'开发3','开发3',1),
-(4,'开发4','开发4',1),
-(5,'开发5','开发5',1),
-(6,'开发6','开发6',1),
-(7,'开发7','开发7',1),
-(8,'开发8','开发8',1),
-(9,'开发9','开发9',1),
-(10,'开发10','开发10',1),
-(11,'开发11','开发11',1),
-(12,'开发12','开发12',1),
-(13,'开发13','开发13',1),
-(13,'开发14','开发14',1),
-(13,'开发15','开发15',1),
-(13,'开发16','开发16',1),
-(13,'开发17','开发17',1),
-(13,'开发18','开发18',1),
-(13,'开发19','开发19',1),
-
+(1,'开发1','开发',1),
+(2,'开发2','开发',1),
+(3,'开发3','开发',1),
+(6,'开发6','开发',1),
+(7,'Java','Java',0),
+(22,'Spring','Spring',0),
+(23,'Hello','Hello',0),
+(24,'Hello1','Hello',0);
 
 /*Table structure for table `t_user` */
 
@@ -88,6 +95,19 @@ insert  into `t_user`(`user_id`,`user_name`,`nick_name`,`create_date`,`last_upda
 ('admin7','admin','管理员','2020-11-15','2020-11-15',7,'202cb962ac59075b964b07152d234b70',1,NULL,'897238156@qq.com'),
 ('admin8','admin','管理员','2020-11-15','2020-11-15',8,'202cb962ac59075b964b07152d234b70',1,NULL,'897238156@qq.com'),
 ('admin9','admin','管理员','2020-11-15','2020-11-15',9,'202cb962ac59075b964b07152d234b70',1,NULL,'897238156@qq.com');
+
+/*Table structure for table `t_user_role_info` */
+
+DROP TABLE IF EXISTS `t_user_role_info`;
+
+CREATE TABLE `t_user_role_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `t_user_role_info` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
