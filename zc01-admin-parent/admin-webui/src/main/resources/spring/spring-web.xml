@@ -50,6 +50,7 @@
 
 	<mvc:view-controller path="/main.html" view-name="admin/admin-main"/>
 	<mvc:view-controller path="/error" view-name="system-error"/>
+	<mvc:view-controller path="/accessDenied" view-name="403"/>
 
 	<!--配置拦截器-->
 <!--    <mvc:interceptors>

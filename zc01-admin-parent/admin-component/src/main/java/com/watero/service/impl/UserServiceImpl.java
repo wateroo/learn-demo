@@ -59,4 +59,9 @@ public class UserServiceImpl implements UserService {
         PageInfo<User> pageInfo = new PageInfo<>(list);
         return pageInfo;
     }
+
+    @Override
+    public User loadUserByUsername(String username) {
+        return userMapper.selectByPrimaryKey(username);
+    }
 }
