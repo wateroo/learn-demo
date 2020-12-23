@@ -3,6 +3,9 @@ package com.watero.config;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import com.alibaba.druid.pool.DruidDataSource;
+import com.watero.entity.User;
+import com.watero.service.UserService;
+import com.watero.util.CommonConfigConstant;
 import com.watero.util.CustomPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,23 +16,30 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 @EnableWebSecurity//启用web环境下的权限控制
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     DruidDataSource druidDataSource;
@@ -91,32 +101,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("loginAcct")//定制登录账号的请求参数名
                 .passwordParameter("userPassword")//定制登录密码的请求参数名
                 .defaultSuccessUrl("/main.html")//定制登陆成功之后的前往的地址
-//                //登陆成功的处理器
+                //登陆成功的处理器
 //                .successHandler(new AuthenticationSuccessHandler() {
 //                    @Override
 //                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//                        response.setContentType("application/json;charset=utf-8");
-//                        PrintWriter out = response.getWriter();
-//                        out.write("login success");
-//                        out.flush();
+//                        Object credentials = authentication.getCredentials();
+//                        String name = authentication.getName();
+//                        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+//                        User loginUser = userService.loadUserByUsername(name);
+//                        HttpSession session = request.getSession();
+//                        session.setAttribute(CommonConfigConstant.ATTR_LOGIN_USER, loginUser);
+//                        request.getRequestDispatcher("/WEB-INF/views/admin/admin-main.jsp").forward(request,response);
 //                    }
 //                })
-//                .permitAll()//和表单登录相关的接口统统都直接通过
+                .permitAll()//和表单登录相关的接口统统都直接通过
                 .and()
                 .logout()//注销登录
                 .logoutUrl("/admin/logout")
-                .logoutSuccessHandler(new LogoutSuccessHandler() {
-                    @Override
-                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        response.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = response.getWriter();
-                        Map<String, String> data = new HashMap<>();
-                        data.put("msg", "logout success");
-                        JSON json = new JSONObject(data);
-                        out.write(json.toJSONString(1));
-                        out.flush();
-                    }
-                })
+                .logoutSuccessUrl("/index.html")
+//                .logoutSuccessHandler(new LogoutSuccessHandler() {
+//                    @Override
+//                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+//                        response.setContentType("application/json;charset=utf-8");
+//                        PrintWriter out = response.getWriter();
+//                        Map<String, String> data = new HashMap<>();
+//                        data.put("msg", "logout success");
+//                        JSON json = new JSONObject(data);
+//                        out.write(json.toJSONString(1));
+//                        out.flush();
+//                    }
+//                })
                 .permitAll()//和注销登陆相关的接口统统都直接通过
 //                .and()
 //                .httpBasic()
