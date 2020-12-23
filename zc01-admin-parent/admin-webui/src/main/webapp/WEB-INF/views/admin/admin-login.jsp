@@ -35,7 +35,8 @@
             <i class="glyphicon glyphicon-log-in"></i> 管理员登录
         </h2>
         <p>${requestScope.exception.message}</p>
-        <p>${param.error}</p>
+        <p>${SPRING_SECURITY_LAST_EXCEPTION.message}</p>
+        <p>${SPRING_SECURITY_LAST_EXCEPTION.cause}</p>
         <div class="form-group has-success has-feedback">
             <input type="text" name="loginAcct" class="form-control" id="loginAcct" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
