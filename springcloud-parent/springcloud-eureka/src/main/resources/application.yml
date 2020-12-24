@@ -1,0 +1,16 @@
+server:
+  port: 1000
+
+spring:
+  application:
+    name: springcloud-eureka-server
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false #服务本身就是注册中心，不必注册自己
+    fetch-registry: false #服务本身就是注册中心，不必从注册中心取回自己
+    service-url:  #客户段访问当前注册中心时使用的地址
+      defaultZone: http://${eureka.instance.hostname}/${server.port}/eureka
+
